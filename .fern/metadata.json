@@ -1,0 +1,24 @@
+{
+  "cliVersion": "5.108.0",
+  "generatorName": "fernapi/fern-python-sdk",
+  "generatorVersion": "5.29.2",
+  "generatorConfig": {
+    "client": {
+      "class_name": "LivingBrain",
+      "filename": "client.py"
+    },
+    "pydantic_config": {
+      "version": "v2",
+      "enum_type": "forward_compatible_python_enums"
+    },
+    "improved_imports": true,
+    "inline_request_params": true,
+    "use_typeddict_requests": true,
+    "offset_semantics": "item-index"
+  },
+  "originGitCommit": "637344243657fd17b1319b38e89c940c93885c70",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "manual",
+  "requestedVersion": "0.1.0",
+  "sdkVersion": "0.1.0"
+}
