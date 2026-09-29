@@ -47,6 +47,13 @@ if typing.TYPE_CHECKING:
     from .score_suggestion import ScoreSuggestionParams
     from .score_suggestions import ScoreSuggestionsParams
     from .search_result import SearchResultParams
+    from .slack_binding import SlackBindingParams
+    from .slack_channel import SlackChannelParams
+    from .slack_disconnect_response import SlackDisconnectResponseParams
+    from .slack_installation import SlackInstallationParams
+    from .slack_o_auth_confirm_response import SlackOAuthConfirmResponseParams
+    from .slack_o_auth_start_response import SlackOAuthStartResponseParams
+    from .slack_status import SlackStatusParams
     from .source import SourceParams
     from .source_list import SourceListParams
     from .source_retry_response import SourceRetryResponseParams
@@ -95,6 +102,13 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScoreSuggestionParams": ".score_suggestion",
     "ScoreSuggestionsParams": ".score_suggestions",
     "SearchResultParams": ".search_result",
+    "SlackBindingParams": ".slack_binding",
+    "SlackChannelParams": ".slack_channel",
+    "SlackDisconnectResponseParams": ".slack_disconnect_response",
+    "SlackInstallationParams": ".slack_installation",
+    "SlackOAuthConfirmResponseParams": ".slack_o_auth_confirm_response",
+    "SlackOAuthStartResponseParams": ".slack_o_auth_start_response",
+    "SlackStatusParams": ".slack_status",
     "SourceListParams": ".source_list",
     "SourceParams": ".source",
     "SourceRetryResponseParams": ".source_retry_response",
@@ -167,6 +181,13 @@ __all__ = [
     "ScoreSuggestionParams",
     "ScoreSuggestionsParams",
     "SearchResultParams",
+    "SlackBindingParams",
+    "SlackChannelParams",
+    "SlackDisconnectResponseParams",
+    "SlackInstallationParams",
+    "SlackOAuthConfirmResponseParams",
+    "SlackOAuthStartResponseParams",
+    "SlackStatusParams",
     "SourceListParams",
     "SourceParams",
     "SourceRetryResponseParams",

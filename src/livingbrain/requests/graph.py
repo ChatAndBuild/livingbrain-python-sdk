@@ -17,3 +17,8 @@ class GraphParams(typing_extensions.TypedDict):
     """
     Connections between the returned nodes.
     """
+
+    truncated: bool
+    """
+    True when eligible pages exceeded the requested node limit
+    """

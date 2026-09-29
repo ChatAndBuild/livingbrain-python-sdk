@@ -69,6 +69,15 @@ if typing.TYPE_CHECKING:
     from .search_result import SearchResult
     from .search_result_page_type import SearchResultPageType
     from .search_result_status import SearchResultStatus
+    from .slack_binding import SlackBinding
+    from .slack_binding_status import SlackBindingStatus
+    from .slack_channel import SlackChannel
+    from .slack_disconnect_response import SlackDisconnectResponse
+    from .slack_installation import SlackInstallation
+    from .slack_installation_status import SlackInstallationStatus
+    from .slack_o_auth_confirm_response import SlackOAuthConfirmResponse
+    from .slack_o_auth_start_response import SlackOAuthStartResponse
+    from .slack_status import SlackStatus
     from .source import Source
     from .source_list import SourceList
     from .source_retry_response import SourceRetryResponse
@@ -141,6 +150,15 @@ _dynamic_imports: typing.Dict[str, str] = {
     "SearchResult": ".search_result",
     "SearchResultPageType": ".search_result_page_type",
     "SearchResultStatus": ".search_result_status",
+    "SlackBinding": ".slack_binding",
+    "SlackBindingStatus": ".slack_binding_status",
+    "SlackChannel": ".slack_channel",
+    "SlackDisconnectResponse": ".slack_disconnect_response",
+    "SlackInstallation": ".slack_installation",
+    "SlackInstallationStatus": ".slack_installation_status",
+    "SlackOAuthConfirmResponse": ".slack_o_auth_confirm_response",
+    "SlackOAuthStartResponse": ".slack_o_auth_start_response",
+    "SlackStatus": ".slack_status",
     "Source": ".source",
     "SourceList": ".source_list",
     "SourceRetryResponse": ".source_retry_response",
@@ -237,6 +255,15 @@ __all__ = [
     "SearchResult",
     "SearchResultPageType",
     "SearchResultStatus",
+    "SlackBinding",
+    "SlackBindingStatus",
+    "SlackChannel",
+    "SlackDisconnectResponse",
+    "SlackInstallation",
+    "SlackInstallationStatus",
+    "SlackOAuthConfirmResponse",
+    "SlackOAuthStartResponse",
+    "SlackStatus",
     "Source",
     "SourceList",
     "SourceRetryResponse",

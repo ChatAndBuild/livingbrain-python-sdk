@@ -16,9 +16,7 @@
     "use_typeddict_requests": true,
     "offset_semantics": "item-index"
   },
-  "originGitCommit": "637344243657fd17b1319b38e89c940c93885c70",
-  "originGitCommitIsDirty": false,
   "invokedBy": "manual",
-  "requestedVersion": "0.1.0",
-  "sdkVersion": "0.1.0"
+  "requestedVersion": "0.2.0",
+  "sdkVersion": "0.2.0"
 }

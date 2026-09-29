@@ -14,6 +14,7 @@ from .environment import LivingBrainEnvironment
 if typing.TYPE_CHECKING:
     from .brains.client import AsyncBrainsClient, BrainsClient
     from .captures.client import AsyncCapturesClient, CapturesClient
+    from .slack.client import AsyncSlackClient, SlackClient
     from .telegram.client import AsyncTelegramClient, TelegramClient
     from .webhooks.client import AsyncWebhooksClient, WebhooksClient
     from .workspace.client import AsyncWorkspaceClient, WorkspaceClient
@@ -120,6 +121,7 @@ class LivingBrain:
         self._workspace: typing.Optional[WorkspaceClient] = None
         self._webhooks: typing.Optional[WebhooksClient] = None
         self._telegram: typing.Optional[TelegramClient] = None
+        self._slack: typing.Optional[SlackClient] = None
 
     @property
     def brains(self):
@@ -160,6 +162,14 @@ class LivingBrain:
 
             self._telegram = TelegramClient(client_wrapper=self._client_wrapper)
         return self._telegram
+
+    @property
+    def slack(self):
+        if self._slack is None:
+            from .slack.client import SlackClient  # noqa: E402
+
+            self._slack = SlackClient(client_wrapper=self._client_wrapper)
+        return self._slack
 
 
 def _make_default_async_client(
@@ -279,6 +289,7 @@ class AsyncLivingBrain:
         self._workspace: typing.Optional[AsyncWorkspaceClient] = None
         self._webhooks: typing.Optional[AsyncWebhooksClient] = None
         self._telegram: typing.Optional[AsyncTelegramClient] = None
+        self._slack: typing.Optional[AsyncSlackClient] = None
 
     @property
     def brains(self):
@@ -319,6 +330,14 @@ class AsyncLivingBrain:
 
             self._telegram = AsyncTelegramClient(client_wrapper=self._client_wrapper)
         return self._telegram
+
+    @property
+    def slack(self):
+        if self._slack is None:
+            from .slack.client import AsyncSlackClient  # noqa: E402
+
+            self._slack = AsyncSlackClient(client_wrapper=self._client_wrapper)
+        return self._slack
 
 
 def _get_base_url(*, base_url: typing.Optional[str] = None, environment: LivingBrainEnvironment) -> str:
