@@ -329,6 +329,7 @@ class RawWorkspaceClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         include_deprecated: typing.Optional[bool] = None,
+        include_archived: typing.Optional[bool] = None,
         bucket: typing.Optional[ListPagesWorkspaceRequestBucket] = None,
         status: typing.Optional[ListPagesWorkspaceRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -346,6 +347,9 @@ class RawWorkspaceClient:
         offset : typing.Optional[int]
 
         include_deprecated : typing.Optional[bool]
+
+        include_archived : typing.Optional[bool]
+            Include archived pages in the results. Archived pages are hidden from lists and search by default.
 
         bucket : typing.Optional[ListPagesWorkspaceRequestBucket]
 
@@ -368,6 +372,7 @@ class RawWorkspaceClient:
                 "limit": limit,
                 "offset": offset,
                 "includeDeprecated": include_deprecated,
+                "includeArchived": include_archived,
                 "bucket": bucket,
                 "status": status,
             },
@@ -389,6 +394,7 @@ class RawWorkspaceClient:
                     limit=limit,
                     offset=offset + len(_items or []),
                     include_deprecated=include_deprecated,
+                    include_archived=include_archived,
                     bucket=bucket,
                     status=status,
                     request_options=request_options,
@@ -1182,6 +1188,164 @@ class RawWorkspaceClient:
             },
             request_options=request_options,
             omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Page,
+                    parse_obj_as(
+                        type_=Page,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def archive(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Page]:
+        """
+        Archive a page. Archived pages are hidden from lists and search until restored, but their content, versions, and connections are kept. Use `restore` to bring the page back.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Page]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/brains/{encode_path_param(brain_id)}/pages/{encode_path_param(slug)}/archive",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Page,
+                    parse_obj_as(
+                        type_=Page,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return HttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    def restore(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> HttpResponse[Page]:
+        """
+        Restore an archived page and return it to active status, so it reappears in lists and search.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        HttpResponse[Page]
+
+        """
+        _response = self._client_wrapper.httpx_client.request(
+            f"v1/brains/{encode_path_param(brain_id)}/pages/{encode_path_param(slug)}/restore",
+            method="POST",
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:
@@ -2831,6 +2995,7 @@ class AsyncRawWorkspaceClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         include_deprecated: typing.Optional[bool] = None,
+        include_archived: typing.Optional[bool] = None,
         bucket: typing.Optional[ListPagesWorkspaceRequestBucket] = None,
         status: typing.Optional[ListPagesWorkspaceRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -2848,6 +3013,9 @@ class AsyncRawWorkspaceClient:
         offset : typing.Optional[int]
 
         include_deprecated : typing.Optional[bool]
+
+        include_archived : typing.Optional[bool]
+            Include archived pages in the results. Archived pages are hidden from lists and search by default.
 
         bucket : typing.Optional[ListPagesWorkspaceRequestBucket]
 
@@ -2870,6 +3038,7 @@ class AsyncRawWorkspaceClient:
                 "limit": limit,
                 "offset": offset,
                 "includeDeprecated": include_deprecated,
+                "includeArchived": include_archived,
                 "bucket": bucket,
                 "status": status,
             },
@@ -2893,6 +3062,7 @@ class AsyncRawWorkspaceClient:
                         limit=limit,
                         offset=offset + len(_items or []),
                         include_deprecated=include_deprecated,
+                        include_archived=include_archived,
                         bucket=bucket,
                         status=status,
                         request_options=request_options,
@@ -3687,6 +3857,164 @@ class AsyncRawWorkspaceClient:
             },
             request_options=request_options,
             omit=OMIT,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Page,
+                    parse_obj_as(
+                        type_=Page,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def archive(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Page]:
+        """
+        Archive a page. Archived pages are hidden from lists and search until restored, but their content, versions, and connections are kept. Use `restore` to bring the page back.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Page]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/brains/{encode_path_param(brain_id)}/pages/{encode_path_param(slug)}/archive",
+            method="POST",
+            request_options=request_options,
+        )
+        try:
+            if 200 <= _response.status_code < 300:
+                _data = typing.cast(
+                    Page,
+                    parse_obj_as(
+                        type_=Page,  # type: ignore
+                        object_=_response.json(),
+                    ),
+                )
+                return AsyncHttpResponse(response=_response, data=_data)
+            if _response.status_code == 400:
+                raise BadRequestError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 401:
+                raise UnauthorizedError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            if _response.status_code == 404:
+                raise NotFoundError(
+                    headers=dict(_response.headers),
+                    body=typing.cast(
+                        ErrorResponse,
+                        parse_obj_as(
+                            type_=ErrorResponse,  # type: ignore
+                            object_=_response.json(),
+                        ),
+                    ),
+                )
+            _response_json = _response.json()
+        except JSONDecodeError:
+            raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response.text)
+        except ValidationError as e:
+            raise ParsingError(
+                status_code=_response.status_code, headers=dict(_response.headers), body=_response.json(), cause=e
+            )
+        raise ApiError(status_code=_response.status_code, headers=dict(_response.headers), body=_response_json)
+
+    async def restore(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> AsyncHttpResponse[Page]:
+        """
+        Restore an archived page and return it to active status, so it reappears in lists and search.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        AsyncHttpResponse[Page]
+
+        """
+        _response = await self._client_wrapper.httpx_client.request(
+            f"v1/brains/{encode_path_param(brain_id)}/pages/{encode_path_param(slug)}/restore",
+            method="POST",
+            request_options=request_options,
         )
         try:
             if 200 <= _response.status_code < 300:

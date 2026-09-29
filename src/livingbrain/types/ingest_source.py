@@ -97,6 +97,17 @@ class IngestSource(UniversalBaseModel):
     Compile pipeline status
     """
 
+    original_bytes: typing_extensions.Annotated[
+        typing.Optional[int],
+        FieldMetadata(alias="originalBytes"),
+        pydantic.Field(
+            alias="originalBytes", default=None, description="Original file/note bytes counted toward account storage"
+        ),
+    ]
+    """
+    Original file/note bytes counted toward account storage
+    """
+
     last_error: typing_extensions.Annotated[
         typing.Optional[str],
         FieldMetadata(alias="lastError"),

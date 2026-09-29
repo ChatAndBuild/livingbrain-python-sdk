@@ -19,4 +19,9 @@ class Graph(UniversalBaseModel):
     Connections between the returned nodes.
     """
 
+    truncated: bool = pydantic.Field()
+    """
+    True when eligible pages exceeded the requested node limit
+    """
+
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

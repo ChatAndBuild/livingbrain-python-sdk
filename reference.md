@@ -1606,6 +1606,14 @@ client.workspace.list_pages(
 <dl>
 <dd>
 
+**include_archived:** `typing.Optional[bool]` — Include archived pages in the results. Archived pages are hidden from lists and search by default.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
 **bucket:** `typing.Optional[ListPagesWorkspaceRequestBucket]` 
     
 </dd>
@@ -2430,6 +2438,172 @@ client.workspace.rename(
 <dd>
 
 **new_slug:** `typing.Optional[str]` — New URL-safe slug. External references to the old slug will stop resolving.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/livingbrain/workspace/client.py">archive</a>(...) -> Page</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Archive a page. Archived pages are hidden from lists and search until restored, but their content, versions, and connections are kept. Use `restore` to bring the page back.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.workspace.archive(
+    brain_id="brainId",
+    slug="slug",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `str` — Page slug
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.workspace.<a href="src/livingbrain/workspace/client.py">restore</a>(...) -> Page</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Restore an archived page and return it to active status, so it reappears in lists and search.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.workspace.restore(
+    brain_id="brainId",
+    slug="slug",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**slug:** `str` — Page slug
     
 </dd>
 </dl>
@@ -4304,6 +4478,695 @@ client.telegram.disconnect(
 <dd>
 
 **brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Slack
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">status</a>(...) -> SlackStatus</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Return every Slack workspace installed for a brain along with its channel bindings. Use the installation IDs returned here to list channels or create bindings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.status(
+    brain_id="brainId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">start_oauth</a>(...) -> SlackOAuthStartResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a signed Slack OAuth installation URL for a brain. Redirect the user to `authorizationUrl`; Slack sends them back to your redirect URL with a `code` and `state` to pass to `confirmOauth`. The signed state expires at `expiresAt`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.start_oauth(
+    brain_id="brainId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">confirm_oauth</a>(...) -> SlackOAuthConfirmResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Complete a Slack installation by exchanging the `code` and `state` Slack returned to your redirect URL. Returns the new installation ID.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.confirm_oauth(
+    brain_id="brainId",
+    code="code",
+    state="state",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**code:** `str` — Slack authorization code
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**state:** `str` — Signed OAuth state
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">channels</a>(...) -> typing.List[SlackChannel]</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the channels visible to the Living Brain bot in a Slack installation. `isMember` tells you whether the bot has already been added to the channel.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.channels(
+    brain_id="brainId",
+    installation_id="installationId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installation_id:** `str` — Slack installation id returned by the status endpoint
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">bind</a>(...) -> SlackBinding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Connect a Slack channel to a brain so it receives brain notifications. Configure which notifications it receives with `updateBinding`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.bind(
+    brain_id="brainId",
+    installation_id="installationId",
+    channel_id="C0123456789",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installation_id:** `str` — Slack installation id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**channel_id:** `str` — Slack channel id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">unbind</a>(...) -> SlackDisconnectResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disconnect a single Slack channel from a brain. The Slack installation and any other bindings are unaffected.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.unbind(
+    brain_id="brainId",
+    binding_id="bindingId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**binding_id:** `str` — Slack channel binding id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">update_binding</a>(...) -> SlackBinding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Update which notifications a bound Slack channel receives — daily briefs, new connections, and page changes. Omitted fields are left unchanged.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.update_binding(
+    brain_id="brainId",
+    binding_id="bindingId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**binding_id:** `str` — Slack channel binding id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notify_briefs:** `typing.Optional[bool]` — Receive daily summary of brain updates
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notify_connections:** `typing.Optional[bool]` — Get notified when strong new connections are discovered
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**notify_changes:** `typing.Optional[bool]` — Get notified when pages are updated with new knowledge
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request_options:** `typing.Optional[RequestOptions]` — Request-specific configuration.
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.slack.<a href="src/livingbrain/slack/client.py">disconnect_installation</a>(...) -> SlackDisconnectResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Disconnect a Slack workspace from a brain and remove all of its channel bindings.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```python
+from livingbrain import LivingBrain
+from livingbrain.environment import LivingBrainEnvironment
+
+client = LivingBrain(
+    api_key="<value>",
+    subject_id="<x-subject-id>",
+    environment=LivingBrainEnvironment.PRODUCTION,
+)
+
+client.slack.disconnect_installation(
+    brain_id="brainId",
+    installation_id="installationId",
+)
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**brain_id:** `str` — Brain id
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**installation_id:** `str` — Slack installation id
     
 </dd>
 </dl>

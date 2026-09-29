@@ -77,6 +77,11 @@ class IngestSourceParams(typing_extensions.TypedDict):
     Compile pipeline status
     """
 
+    original_bytes: typing_extensions.Annotated[typing.Optional[int], FieldMetadata(alias="originalBytes")]
+    """
+    Original file/note bytes counted toward account storage
+    """
+
     last_error: typing_extensions.Annotated[typing.Optional[str], FieldMetadata(alias="lastError")]
     """
     Last compile error, if any

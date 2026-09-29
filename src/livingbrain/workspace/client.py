@@ -191,6 +191,7 @@ class WorkspaceClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         include_deprecated: typing.Optional[bool] = None,
+        include_archived: typing.Optional[bool] = None,
         bucket: typing.Optional[ListPagesWorkspaceRequestBucket] = None,
         status: typing.Optional[ListPagesWorkspaceRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -208,6 +209,9 @@ class WorkspaceClient:
         offset : typing.Optional[int]
 
         include_deprecated : typing.Optional[bool]
+
+        include_archived : typing.Optional[bool]
+            Include archived pages in the results. Archived pages are hidden from lists and search by default.
 
         bucket : typing.Optional[ListPagesWorkspaceRequestBucket]
 
@@ -243,6 +247,7 @@ class WorkspaceClient:
             limit=limit,
             offset=offset,
             include_deprecated=include_deprecated,
+            include_archived=include_archived,
             bucket=bucket,
             status=status,
             request_options=request_options,
@@ -651,6 +656,78 @@ class WorkspaceClient:
         _response = self._raw_client.rename(
             brain_id, slug, title=title, new_slug=new_slug, request_options=request_options
         )
+        return _response.data
+
+    def archive(self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None) -> Page:
+        """
+        Archive a page. Archived pages are hidden from lists and search until restored, but their content, versions, and connections are kept. Use `restore` to bring the page back.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Page
+
+
+        Examples
+        --------
+        from livingbrain import LivingBrain
+
+        client = LivingBrain(
+            subject_id="YOUR_SUBJECT_ID",
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.archive(
+            brain_id="brainId",
+            slug="slug",
+        )
+        """
+        _response = self._raw_client.archive(brain_id, slug, request_options=request_options)
+        return _response.data
+
+    def restore(self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None) -> Page:
+        """
+        Restore an archived page and return it to active status, so it reappears in lists and search.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Page
+
+
+        Examples
+        --------
+        from livingbrain import LivingBrain
+
+        client = LivingBrain(
+            subject_id="YOUR_SUBJECT_ID",
+            api_key="YOUR_API_KEY",
+        )
+        client.workspace.restore(
+            brain_id="brainId",
+            slug="slug",
+        )
+        """
+        _response = self._raw_client.restore(brain_id, slug, request_options=request_options)
         return _response.data
 
     def recover(self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None) -> Page:
@@ -1480,6 +1557,7 @@ class AsyncWorkspaceClient:
         limit: typing.Optional[int] = None,
         offset: typing.Optional[int] = None,
         include_deprecated: typing.Optional[bool] = None,
+        include_archived: typing.Optional[bool] = None,
         bucket: typing.Optional[ListPagesWorkspaceRequestBucket] = None,
         status: typing.Optional[ListPagesWorkspaceRequestStatus] = None,
         request_options: typing.Optional[RequestOptions] = None,
@@ -1497,6 +1575,9 @@ class AsyncWorkspaceClient:
         offset : typing.Optional[int]
 
         include_deprecated : typing.Optional[bool]
+
+        include_archived : typing.Optional[bool]
+            Include archived pages in the results. Archived pages are hidden from lists and search by default.
 
         bucket : typing.Optional[ListPagesWorkspaceRequestBucket]
 
@@ -1541,6 +1622,7 @@ class AsyncWorkspaceClient:
             limit=limit,
             offset=offset,
             include_deprecated=include_deprecated,
+            include_archived=include_archived,
             bucket=bucket,
             status=status,
             request_options=request_options,
@@ -2021,6 +2103,98 @@ class AsyncWorkspaceClient:
         _response = await self._raw_client.rename(
             brain_id, slug, title=title, new_slug=new_slug, request_options=request_options
         )
+        return _response.data
+
+    async def archive(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Page:
+        """
+        Archive a page. Archived pages are hidden from lists and search until restored, but their content, versions, and connections are kept. Use `restore` to bring the page back.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Page
+
+
+        Examples
+        --------
+        import asyncio
+
+        from livingbrain import AsyncLivingBrain
+
+        client = AsyncLivingBrain(
+            subject_id="YOUR_SUBJECT_ID",
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.archive(
+                brain_id="brainId",
+                slug="slug",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.archive(brain_id, slug, request_options=request_options)
+        return _response.data
+
+    async def restore(
+        self, brain_id: str, slug: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> Page:
+        """
+        Restore an archived page and return it to active status, so it reappears in lists and search.
+
+        Parameters
+        ----------
+        brain_id : str
+            Brain id
+
+        slug : str
+            Page slug
+
+        request_options : typing.Optional[RequestOptions]
+            Request-specific configuration.
+
+        Returns
+        -------
+        Page
+
+
+        Examples
+        --------
+        import asyncio
+
+        from livingbrain import AsyncLivingBrain
+
+        client = AsyncLivingBrain(
+            subject_id="YOUR_SUBJECT_ID",
+            api_key="YOUR_API_KEY",
+        )
+
+
+        async def main() -> None:
+            await client.workspace.restore(
+                brain_id="brainId",
+                slug="slug",
+            )
+
+
+        asyncio.run(main())
+        """
+        _response = await self._raw_client.restore(brain_id, slug, request_options=request_options)
         return _response.data
 
     async def recover(
