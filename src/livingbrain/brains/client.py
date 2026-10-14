@@ -164,7 +164,7 @@ class BrainsClient:
 
     def remove(self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteResponse:
         """
-        Permanently delete a brain along with all of its pages, sources, connections, and change history. This cannot be undone.
+        Soft-delete a brain and disable its active data.
 
         Parameters
         ----------
@@ -535,7 +535,7 @@ class AsyncBrainsClient:
 
     async def remove(self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> DeleteResponse:
         """
-        Permanently delete a brain along with all of its pages, sources, connections, and change history. This cannot be undone.
+        Soft-delete a brain and disable its active data.
 
         Parameters
         ----------

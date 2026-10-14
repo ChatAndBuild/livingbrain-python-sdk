@@ -6,6 +6,7 @@ import pydantic
 import typing_extensions
 from ..core.pydantic_utilities import UniversalBaseModel
 from ..core.serialization import FieldMetadata
+from .search_result_matched_on import SearchResultMatchedOn
 from .search_result_page_type import SearchResultPageType
 from .search_result_status import SearchResultStatus
 
@@ -50,6 +51,18 @@ class SearchResult(UniversalBaseModel):
     similarity: float = pydantic.Field()
     """
     Similarity score (0-1)
+    """
+
+    matched_on: typing_extensions.Annotated[
+        SearchResultMatchedOn,
+        FieldMetadata(alias="matchedOn"),
+        pydantic.Field(
+            alias="matchedOn",
+            description="Why the page matched: semantic similarity, keyword (title/summary/body words), or both. Keyword matches are returned even when similarity is below minSimilarity.",
+        ),
+    ]
+    """
+    Why the page matched: semantic similarity, keyword (title/summary/body words), or both. Keyword matches are returned even when similarity is below minSimilarity.
     """
 
     model_config: typing.ClassVar[pydantic.ConfigDict] = pydantic.ConfigDict(extra="allow", frozen=True)

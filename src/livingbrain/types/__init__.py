@@ -67,6 +67,7 @@ if typing.TYPE_CHECKING:
     from .score_suggestion import ScoreSuggestion
     from .score_suggestions import ScoreSuggestions
     from .search_result import SearchResult
+    from .search_result_matched_on import SearchResultMatchedOn
     from .search_result_page_type import SearchResultPageType
     from .search_result_status import SearchResultStatus
     from .slack_binding import SlackBinding
@@ -148,6 +149,7 @@ _dynamic_imports: typing.Dict[str, str] = {
     "ScoreSuggestion": ".score_suggestion",
     "ScoreSuggestions": ".score_suggestions",
     "SearchResult": ".search_result",
+    "SearchResultMatchedOn": ".search_result_matched_on",
     "SearchResultPageType": ".search_result_page_type",
     "SearchResultStatus": ".search_result_status",
     "SlackBinding": ".slack_binding",
@@ -253,6 +255,7 @@ __all__ = [
     "ScoreSuggestion",
     "ScoreSuggestions",
     "SearchResult",
+    "SearchResultMatchedOn",
     "SearchResultPageType",
     "SearchResultStatus",
     "SlackBinding",
