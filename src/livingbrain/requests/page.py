@@ -89,11 +89,6 @@ class PageParams(typing_extensions.TypedDict):
     Wikilink slugs referenced by the body
     """
 
-    embedding: typing.Sequence[float]
-    """
-    Vector embedding used for semantic search (internal; can be large)
-    """
-
     version: int
     """
     Monotonic version, bumped on every compile/edit

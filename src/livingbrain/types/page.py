@@ -107,11 +107,6 @@ class Page(UniversalBaseModel):
     Wikilink slugs referenced by the body
     """
 
-    embedding: typing.List[float] = pydantic.Field()
-    """
-    Vector embedding used for semantic search (internal; can be large)
-    """
-
     version: int = pydantic.Field()
     """
     Monotonic version, bumped on every compile/edit

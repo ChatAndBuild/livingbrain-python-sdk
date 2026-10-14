@@ -2,6 +2,7 @@
 
 import typing_extensions
 from ..core.serialization import FieldMetadata
+from ..types.search_result_matched_on import SearchResultMatchedOn
 from ..types.search_result_page_type import SearchResultPageType
 from ..types.search_result_status import SearchResultStatus
 
@@ -40,4 +41,9 @@ class SearchResultParams(typing_extensions.TypedDict):
     similarity: float
     """
     Similarity score (0-1)
+    """
+
+    matched_on: typing_extensions.Annotated[SearchResultMatchedOn, FieldMetadata(alias="matchedOn")]
+    """
+    Why the page matched: semantic similarity, keyword (title/summary/body words), or both. Keyword matches are returned even when similarity is below minSimilarity.
     """
