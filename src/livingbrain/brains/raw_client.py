@@ -676,9 +676,9 @@ class RawBrainsClient:
 
     def run_brief(
         self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> HttpResponse[BriefRunResponse]:
+    ) -> HttpResponse[typing.Optional[BriefRunResponse]]:
         """
-        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the brief content once generation completes.
+        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the generated brief page's id and slug, or `null` when the last 7 days had no activity to brief.
 
         Parameters
         ----------
@@ -690,7 +690,7 @@ class RawBrainsClient:
 
         Returns
         -------
-        HttpResponse[BriefRunResponse]
+        HttpResponse[typing.Optional[BriefRunResponse]]
             Null body when the last 7 days had no activity to brief
         """
         _response = self._client_wrapper.httpx_client.request(
@@ -699,11 +699,13 @@ class RawBrainsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return HttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BriefRunResponse,
+                    typing.Optional[BriefRunResponse],
                     parse_obj_as(
-                        type_=BriefRunResponse,  # type: ignore
+                        type_=typing.Optional[BriefRunResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )
@@ -1404,9 +1406,9 @@ class AsyncRawBrainsClient:
 
     async def run_brief(
         self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> AsyncHttpResponse[BriefRunResponse]:
+    ) -> AsyncHttpResponse[typing.Optional[BriefRunResponse]]:
         """
-        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the brief content once generation completes.
+        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the generated brief page's id and slug, or `null` when the last 7 days had no activity to brief.
 
         Parameters
         ----------
@@ -1418,7 +1420,7 @@ class AsyncRawBrainsClient:
 
         Returns
         -------
-        AsyncHttpResponse[BriefRunResponse]
+        AsyncHttpResponse[typing.Optional[BriefRunResponse]]
             Null body when the last 7 days had no activity to brief
         """
         _response = await self._client_wrapper.httpx_client.request(
@@ -1427,11 +1429,13 @@ class AsyncRawBrainsClient:
             request_options=request_options,
         )
         try:
+            if _response is None or not _response.text.strip():
+                return AsyncHttpResponse(response=_response, data=None)
             if 200 <= _response.status_code < 300:
                 _data = typing.cast(
-                    BriefRunResponse,
+                    typing.Optional[BriefRunResponse],
                     parse_obj_as(
-                        type_=BriefRunResponse,  # type: ignore
+                        type_=typing.Optional[BriefRunResponse],  # type: ignore
                         object_=_response.json(),
                     ),
                 )

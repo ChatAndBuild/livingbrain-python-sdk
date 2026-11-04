@@ -16,9 +16,10 @@
     "use_typeddict_requests": true,
     "offset_semantics": "item-index"
   },
-  "originGitCommit": "5d283e69d22e6c35390addcab86bffd32ecdf9d8",
-  "originGitCommitIsDirty": true,
-  "invokedBy": "manual",
-  "requestedVersion": "0.3.0",
-  "sdkVersion": "0.3.0"
+  "originGitCommit": "e14c8af048918e29cba5ad3e6b784626b9241634",
+  "originGitCommitIsDirty": false,
+  "invokedBy": "ci",
+  "requestedVersion": "0.3.1",
+  "ciProvider": "github",
+  "sdkVersion": "0.3.1"
 }
