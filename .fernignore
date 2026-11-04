@@ -3,4 +3,4 @@
 .fern/replay.yml
 .gitattributes
 changelog.md
-poetry.lock
+src/livingbrain/core/pydantic_utilities.py
