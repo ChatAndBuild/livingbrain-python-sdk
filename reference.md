@@ -617,7 +617,7 @@ client.brains.update_brief_settings(
 </dl>
 </details>
 
-<details><summary><code>client.brains.<a href="src/livingbrain/brains/client.py">run_brief</a>(...) -> BriefRunResponse</code></summary>
+<details><summary><code>client.brains.<a href="src/livingbrain/brains/client.py">run_brief</a>(...) -> typing.Optional[BriefRunResponse]</code></summary>
 <dl>
 <dd>
 
@@ -629,7 +629,7 @@ client.brains.update_brief_settings(
 <dl>
 <dd>
 
-Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the brief content once generation completes.
+Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the generated brief page's id and slug, or `null` when the last 7 days had no activity to brief.
 </dd>
 </dl>
 </dd>

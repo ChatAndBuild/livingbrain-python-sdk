@@ -321,9 +321,11 @@ class BrainsClient:
         )
         return _response.data
 
-    def run_brief(self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None) -> BriefRunResponse:
+    def run_brief(
+        self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None
+    ) -> typing.Optional[BriefRunResponse]:
         """
-        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the brief content once generation completes.
+        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the generated brief page's id and slug, or `null` when the last 7 days had no activity to brief.
 
         Parameters
         ----------
@@ -335,7 +337,7 @@ class BrainsClient:
 
         Returns
         -------
-        BriefRunResponse
+        typing.Optional[BriefRunResponse]
             Null body when the last 7 days had no activity to brief
 
         Examples
@@ -726,9 +728,9 @@ class AsyncBrainsClient:
 
     async def run_brief(
         self, brain_id: str, *, request_options: typing.Optional[RequestOptions] = None
-    ) -> BriefRunResponse:
+    ) -> typing.Optional[BriefRunResponse]:
         """
-        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the brief content once generation completes.
+        Generate this brain's daily brief immediately instead of waiting for its scheduled run. Returns the generated brief page's id and slug, or `null` when the last 7 days had no activity to brief.
 
         Parameters
         ----------
@@ -740,7 +742,7 @@ class AsyncBrainsClient:
 
         Returns
         -------
-        BriefRunResponse
+        typing.Optional[BriefRunResponse]
             Null body when the last 7 days had no activity to brief
 
         Examples

@@ -35,12 +35,12 @@ class BaseClientWrapper:
         import platform
 
         headers: typing.Dict[str, str] = {
-            "User-Agent": "livingbrain/0.3.0",
+            "User-Agent": "livingbrain/0.3.1",
             "X-Fern-Language": "Python",
             "X-Fern-Runtime": f"python/{platform.python_version()}",
             "X-Fern-Platform": f"{platform.system().lower()}/{platform.release()}",
             "X-Fern-SDK-Name": "livingbrain",
-            "X-Fern-SDK-Version": "0.3.0",
+            "X-Fern-SDK-Version": "0.3.1",
             **(self.get_custom_headers() or {}),
         }
         headers["x-subject-id"] = self._subject_id
