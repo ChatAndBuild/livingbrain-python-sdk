@@ -4,3 +4,4 @@
 .gitattributes
 changelog.md
 src/livingbrain/core/pydantic_utilities.py
+README.md
