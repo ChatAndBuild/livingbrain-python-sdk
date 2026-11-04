@@ -1,9 +1,9 @@
 [project]
-name = "livingbrain"
+name = "livingbrain-sdk"
 dynamic = ["version"]
 
 [tool.poetry]
-name = "livingbrain"
+name = "livingbrain-sdk"
 version = "0.3.1"
 description = ""
 readme = "README.md"

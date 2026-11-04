@@ -95,7 +95,7 @@ class TestDefaultClientsWithoutAiohttp(unittest.TestCase):
 
             with self.assertRaises(RuntimeError) as ctx:
                 livingbrain._default_clients.DefaultAioHttpClient()
-            self.assertIn("pip install livingbrain[aiohttp]", str(ctx.exception))
+            self.assertIn("pip install livingbrain-sdk[aiohttp]", str(ctx.exception))
 
         importlib.reload(livingbrain._default_clients)
 
